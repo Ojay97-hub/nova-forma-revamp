@@ -31,7 +31,7 @@ const base = (content: string) => `
         <table width="100%" cellpadding="0" cellspacing="0" style="background:${INK}; border-radius:16px 16px 0 0; padding:28px 36px;">
           <tr>
             <td>
-              <img src="${LOGO}" alt="Nova Forma" width="48" height="48" style="display:block;" />
+              <img src="${LOGO}" alt="Nova Forma" width="48" height="48" style="display:block; background:${CREAM}; border-radius:12px; padding:8px;" />
               <p style="margin-top:10px; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:${TEAL};">Nova Forma Designs</p>
             </td>
           </tr>
