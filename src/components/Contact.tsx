@@ -8,6 +8,8 @@ export default function Contact() {
   const root = useRef<HTMLElement>(null);
   const reduced = usePrefersReducedMotion();
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const el = root.current;
@@ -20,9 +22,32 @@ export default function Contact() {
     return () => ctx.revert();
   }, [reduced]);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
+    setLoading(true);
+    setError(null);
+
+    const form = e.currentTarget;
+    const body = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error("Failed to send");
+      setSent(true);
+    } catch {
+      setError("Something went wrong. Please try emailing me directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const field =
@@ -122,8 +147,11 @@ export default function Contact() {
                     placeholder="Tell me about your project..."
                   />
                 </div>
-                <MagneticButton type="submit" className="justify-center">
-                  Send message
+                {error && (
+                  <p className="text-sm font-medium text-red-600">{error}</p>
+                )}
+                <MagneticButton type="submit" className="justify-center" disabled={loading}>
+                  {loading ? "Sending…" : "Send message"}
                 </MagneticButton>
               </div>
             </form>
