@@ -85,10 +85,6 @@ export default function Services() {
                 <h3 className="mt-5 font-display text-2xl font-extrabold text-ink">{s.title}</h3>
                 <p className="mt-2 flex-1 text-base leading-relaxed text-ink-soft">{s.copy}</p>
 
-                <span className="mt-5 inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-eyebrow text-teal-deep">
-                  Learn more
-                  <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </span>
               </article>
             </li>
           ))}
