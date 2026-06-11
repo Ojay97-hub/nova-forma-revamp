@@ -60,8 +60,8 @@ export default function MagneticButton({
   const base =
     "group relative inline-flex items-center gap-2.5 rounded-full border-2 border-ink px-7 py-3.5 font-sans text-sm font-bold shadow-pop transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none";
   const styles: Record<Variant, string> = {
-    solid: "bg-teal text-ink hover:bg-teal-soft",
-    ink: "bg-ink text-cream hover:bg-teal hover:text-ink",
+    solid: "bg-teal text-navy hover:bg-teal-soft dark:hover:bg-teal",
+    ink: "bg-navy text-paper hover:bg-teal hover:text-navy",
     ghost: "bg-ivory text-ink hover:bg-navy-mist",
   };
   const cls = `${base} ${styles[variant]} ${className}`;

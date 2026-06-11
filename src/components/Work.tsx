@@ -119,25 +119,25 @@ export default function Work() {
               </span>
 
               <BrowserFrame url={p.url}>
-                  <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/7]" style={{ background: p.cover }}>
-                    <div className="absolute inset-0 p-5 sm:p-8">
-                      <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-lg border-2 border-cream/40 bg-cream/20" />
-                        <div className="h-4 w-1/3 max-w-24 rounded-full border border-cream/30 bg-cream/20" />
-                      </div>
-                      <div className="mt-5 h-8 w-full max-w-[72%] rounded-lg border-2 border-cream/30 bg-cream/20 sm:mt-6 sm:h-9 sm:w-3/5" />
-                      <div className="mt-3 h-5 w-1/2 rounded-lg border-2 border-cream/20 bg-cream/10 sm:h-6 sm:w-2/5" />
-                      <div className="mt-5 flex max-w-full gap-3">
-                        <div className="h-9 flex-1 rounded-full border-2 border-cream/40 bg-cream/30 sm:h-10 sm:max-w-32" />
-                        <div className="h-9 flex-1 rounded-full border-2 border-cream/20 bg-cream/10 sm:h-10 sm:max-w-28" />
-                      </div>
-                      <div className="absolute bottom-5 left-5 right-5 grid grid-cols-3 gap-2 sm:bottom-8 sm:left-auto sm:right-8 sm:gap-3">
-                        {[...Array(3)].map((_, i) => (
-                          <div key={i} className="h-16 rounded-xl border-2 border-cream/30 bg-cream/15 sm:h-20 sm:w-28" />
-                        ))}
-                      </div>
+                <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/7]" style={{ background: p.cover }}>
+                  <div className="absolute inset-0 p-5 sm:p-8">
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-lg border-2 border-paper/40 bg-paper/20" />
+                      <div className="h-4 w-1/3 max-w-24 rounded-full border border-paper/30 bg-paper/20" />
+                    </div>
+                    <div className="mt-5 h-8 w-full max-w-[72%] rounded-lg border-2 border-paper/30 bg-paper/20 sm:mt-6 sm:h-9 sm:w-3/5" />
+                    <div className="mt-3 h-5 w-1/2 rounded-lg border-2 border-paper/20 bg-paper/10 sm:h-6 sm:w-2/5" />
+                    <div className="mt-5 flex max-w-full gap-3">
+                      <div className="h-9 flex-1 rounded-full border-2 border-paper/40 bg-paper/30 sm:h-10 sm:max-w-32" />
+                      <div className="h-9 flex-1 rounded-full border-2 border-paper/20 bg-paper/10 sm:h-10 sm:max-w-28" />
+                    </div>
+                    <div className="absolute bottom-5 left-5 right-5 grid grid-cols-3 gap-2 sm:bottom-8 sm:left-auto sm:right-8 sm:gap-3">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="h-16 rounded-xl border-2 border-paper/30 bg-paper/15 sm:h-20 sm:w-28" />
+                      ))}
                     </div>
                   </div>
+                </div>
               </BrowserFrame>
             </a>
 

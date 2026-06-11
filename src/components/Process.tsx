@@ -123,13 +123,13 @@ export default function Process() {
   }, [reduced]);
 
   return (
-    <section ref={root} id="process" className="overflow-hidden bg-ink text-cream">
+    <section ref={root} id="process" className="overflow-hidden bg-navy text-paper">
       <div className="flex min-h-[100svh] flex-col justify-center py-24 lg:py-0">
         <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-          <span className="inline-flex items-center gap-2 rounded-full border-2 border-cream bg-ink px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-cream">
+          <span className="inline-flex items-center gap-2 rounded-full border-2 border-paper bg-navy px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-paper">
             ✨ How I work
           </span>
-          <h2 data-process-title className="display-lg mt-7 max-w-3xl font-display font-extrabold text-cream">
+          <h2 data-process-title className="display-lg mt-7 max-w-3xl font-display font-extrabold text-paper">
             A clear, honest process — no surprises.
           </h2>
         </div>
@@ -166,7 +166,7 @@ export default function Process() {
           ))}
         </div>
 
-        <p className="mx-auto mt-10 hidden w-full max-w-6xl px-8 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-cream/50 lg:block">
+        <p className="mx-auto mt-10 hidden w-full max-w-6xl px-8 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-paper/50 lg:block">
           Keep scrolling →
         </p>
       </div>

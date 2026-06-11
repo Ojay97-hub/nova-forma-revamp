@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "../lib/animations";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
+import { useTheme, type Theme } from "../hooks/useTheme";
 import LogoMark from "./ui/LogoMark";
 
 const LINKS = [
@@ -10,10 +11,36 @@ const LINKS = [
   { label: "Process", href: "#process" },
 ];
 
+function ThemeToggle({
+  theme,
+  onToggle,
+  className = "",
+}: {
+  theme: Theme;
+  onToggle: () => void;
+  className?: string;
+}) {
+  const nextTheme = theme === "dark" ? "light" : "dark";
+
+  return (
+    <button
+      type="button"
+      aria-label={`Switch to ${nextTheme} mode`}
+      aria-pressed={theme === "dark"}
+      title={`Switch to ${nextTheme} mode`}
+      onClick={onToggle}
+      className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-ink bg-ivory text-lg font-bold leading-none text-ink shadow-pop transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-navy-mist hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none ${className}`}
+    >
+      <span aria-hidden>{theme === "dark" ? "☀" : "☾"}</span>
+    </button>
+  );
+}
+
 export default function Navbar() {
   const nav = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const reduced = usePrefersReducedMotion();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const el = nav.current;
@@ -57,24 +84,30 @@ export default function Navbar() {
           <li>
             <a
               href="#contact"
-              className="rounded-full border-2 border-ink bg-teal px-4 py-2 text-sm font-bold text-ink shadow-pop transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none"
+              className="rounded-full border-2 border-ink bg-teal px-4 py-2 text-sm font-bold text-navy shadow-pop transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-pop-lg active:translate-y-0.5 active:shadow-none"
             >
               Let's chat
             </a>
           </li>
+          <li>
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+          </li>
         </ul>
 
-        <button
-          className="rounded-full border-2 border-ink bg-navy-mist px-3 py-1.5 md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="font-mono text-xs font-bold uppercase tracking-eyebrow text-ink">
-            {open ? "Close" : "Menu"}
-          </span>
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle theme={theme} onToggle={toggleTheme} className="h-9 w-9" />
+          <button
+            className="rounded-full border-2 border-ink bg-navy-mist px-3 py-1.5"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="font-mono text-xs font-bold uppercase tracking-eyebrow text-ink">
+              {open ? "Close" : "Menu"}
+            </span>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}

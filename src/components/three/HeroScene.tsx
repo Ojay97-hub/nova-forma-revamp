@@ -1,18 +1,60 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, type ThreeEvent, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 type LogoPart = {
   name: string;
-  color: string;
+  color: "navy" | "teal";
   points: Array<[number, number]>;
   hoverOffset: [number, number, number];
 };
 
-const NAVY = "#0F2233";
-const TEAL = "#3FD2C6";
-const HOVER_TEAL = "#7CF4EC";
-const HOVER_NAVY = "#244963";
+type ScenePalette = {
+  navy: string;
+  teal: string;
+  hoverTeal: string;
+  hoverNavy: string;
+  inkEmissive: number;
+  inkPulse: number;
+  inkHoverEmissive: number;
+  inkRoughness: number;
+  light: string;
+};
+
+const LIGHT_PALETTE: ScenePalette = {
+  navy: "#0F2233",
+  teal: "#3FD2C6",
+  hoverTeal: "#7CF4EC",
+  hoverNavy: "#244963",
+  inkEmissive: 0.015,
+  inkPulse: 0.015,
+  inkHoverEmissive: 0.03,
+  inkRoughness: 0.36,
+  light: "#F7FCFC",
+};
+
+function getScenePalette(): ScenePalette {
+  if (typeof window === "undefined") return LIGHT_PALETTE;
+
+  const styles = window.getComputedStyle(document.documentElement);
+  const read = (name: string, fallback: string) => styles.getPropertyValue(name).trim() || fallback;
+  const readNumber = (name: string, fallback: number) => {
+    const value = Number.parseFloat(styles.getPropertyValue(name));
+    return Number.isFinite(value) ? value : fallback;
+  };
+
+  return {
+    navy: read("--logo-ink", LIGHT_PALETTE.navy),
+    teal: read("--logo-accent", LIGHT_PALETTE.teal),
+    hoverTeal: read("--logo-accent-hover", LIGHT_PALETTE.hoverTeal),
+    hoverNavy: read("--logo-ink-hover", LIGHT_PALETTE.hoverNavy),
+    inkEmissive: readNumber("--logo-ink-emissive", LIGHT_PALETTE.inkEmissive),
+    inkPulse: readNumber("--logo-ink-pulse", LIGHT_PALETTE.inkPulse),
+    inkHoverEmissive: readNumber("--logo-ink-hover-emissive", LIGHT_PALETTE.inkHoverEmissive),
+    inkRoughness: readNumber("--logo-ink-roughness", LIGHT_PALETTE.inkRoughness),
+    light: read("--scene-light", LIGHT_PALETTE.light),
+  };
+}
 
 const normalize = ([x, y]: [number, number]): [number, number] => [
   (x - 90) / 42,
@@ -91,7 +133,7 @@ function makeRoundedShape(points: Array<[number, number]>, radius = 0.055) {
 const PARTS: LogoPart[] = [
   {
     name: "left-wing",
-    color: NAVY,
+    color: "navy",
     points: [
       [17.5, 154],
       [23.5, 57.5],
@@ -108,7 +150,7 @@ const PARTS: LogoPart[] = [
   },
   {
     name: "right-wing",
-    color: NAVY,
+    color: "navy",
     points: [
       [98, 154],
       [98, 105],
@@ -123,7 +165,7 @@ const PARTS: LogoPart[] = [
   },
   {
     name: "tail",
-    color: TEAL,
+    color: "teal",
     points: [
       [118, 154],
       [123.3, 127.8],
@@ -138,7 +180,7 @@ const PARTS: LogoPart[] = [
   },
   {
     name: "chevron",
-    color: NAVY,
+    color: "navy",
     points: [
       [55.2, 47],
       [66.7, 34.5],
@@ -151,7 +193,7 @@ const PARTS: LogoPart[] = [
   },
   {
     name: "spark",
-    color: TEAL,
+    color: "teal",
     points: [
       [72, 26],
       [95, 16],
@@ -185,6 +227,7 @@ function LogoShape({
   animate,
   hovered,
   activePoint,
+  palette,
   onPointerOver,
   onPointerOut,
 }: {
@@ -193,20 +236,22 @@ function LogoShape({
   animate: boolean;
   hovered: boolean;
   activePoint: THREE.Vector3 | null;
+  palette: ScenePalette;
   onPointerOver: () => void;
   onPointerOut: () => void;
 }) {
   const mesh = useRef<THREE.Mesh>(null);
   const material = useRef<THREE.MeshStandardMaterial>(null);
   const geometry = useMemo(() => makeGeometry(part.points), [part.points]);
-  const isAccent = part.color === TEAL;
+  const isAccent = part.color === "teal";
+  const partColor = isAccent ? palette.teal : palette.navy;
   const localPointer = useRef(new THREE.Vector3(999, 999, 999));
   const targetGlow = useRef(0);
 
-  const baseColor = useMemo(() => new THREE.Color(part.color), [part.color]);
+  const baseColor = useMemo(() => new THREE.Color(partColor), [partColor]);
   const hoverColor = useMemo(
-    () => new THREE.Color(isAccent ? HOVER_TEAL : HOVER_NAVY),
-    [isAccent],
+    () => new THREE.Color(isAccent ? palette.hoverTeal : palette.hoverNavy),
+    [isAccent, palette.hoverNavy, palette.hoverTeal],
   );
 
   const updateVertexGlow = (glow: number) => {
@@ -274,7 +319,7 @@ function LogoShape({
     if (material.current) {
       material.current.emissiveIntensity = isAccent
         ? 0.08 + Math.max(0, wave) * 0.1 + hoverLift * 0.22
-        : 0.015 + Math.max(0, wave) * 0.015 + hoverLift * 0.03;
+        : palette.inkEmissive + Math.max(0, wave) * palette.inkPulse + hoverLift * palette.inkHoverEmissive;
     }
 
     updateVertexGlow(glow);
@@ -306,16 +351,24 @@ function LogoShape({
         ref={material}
         color="#FFFFFF"
         vertexColors
-        roughness={isAccent ? 0.24 : 0.36}
-        metalness={isAccent ? 0.16 : 0.08}
-        emissive={part.color}
-        emissiveIntensity={isAccent ? 0.08 : 0.015}
+        roughness={isAccent ? 0.24 : palette.inkRoughness}
+        metalness={isAccent ? 0.16 : 0.04}
+        emissive={partColor}
+        emissiveIntensity={isAccent ? 0.08 : palette.inkEmissive}
       />
     </mesh>
   );
 }
 
-function AccentGlow({ animate, hovered }: { animate: boolean; hovered: boolean }) {
+function AccentGlow({
+  animate,
+  hovered,
+  palette,
+}: {
+  animate: boolean;
+  hovered: boolean;
+  palette: ScenePalette;
+}) {
   const group = useRef<THREE.Group>(null);
   const material = useRef<THREE.MeshBasicMaterial>(null);
 
@@ -333,7 +386,7 @@ function AccentGlow({ animate, hovered }: { animate: boolean; hovered: boolean }
     <group ref={group} position={[0.08, -0.08, -0.26]}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[1.95, 0.01, 8, 120]} />
-        <meshBasicMaterial ref={material} color={TEAL} transparent opacity={0.12} />
+        <meshBasicMaterial ref={material} color={palette.teal} transparent opacity={0.12} />
       </mesh>
     </group>
   );
@@ -341,9 +394,11 @@ function AccentGlow({ animate, hovered }: { animate: boolean; hovered: boolean }
 
 function Scene({
   animate,
+  palette,
   onDragChange,
 }: {
   animate: boolean;
+  palette: ScenePalette;
   onDragChange: (dragging: boolean) => void;
 }) {
   const { viewport } = useThree();
@@ -492,7 +547,7 @@ function Scene({
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
       <group ref={system} rotation={[0.04, -0.1, 0]}>
-        <AccentGlow animate={animate} hovered={Boolean(hoveredPart)} />
+        <AccentGlow animate={animate} hovered={Boolean(hoveredPart)} palette={palette} />
         {PARTS.map((part, index) => (
           <LogoShape
             key={part.name}
@@ -501,6 +556,7 @@ function Scene({
             animate={animate}
             hovered={hoveredPart === part.name}
             activePoint={hoveredPart === part.name ? activePoint : null}
+            palette={palette}
             onPointerOver={() => setHoveredPart(part.name)}
             onPointerOut={() => setHoveredPart((current) => (current === part.name ? null : current))}
           />
@@ -512,6 +568,17 @@ function Scene({
 
 export default function HeroScene({ animate }: { animate: boolean }) {
   const [dragging, setDragging] = useState(false);
+  const [palette, setPalette] = useState<ScenePalette>(getScenePalette);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const syncPalette = () => setPalette(getScenePalette());
+    const observer = new MutationObserver(syncPalette);
+
+    syncPalette();
+    observer.observe(root, { attributes: true, attributeFilter: ["class", "data-theme"] });
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <Canvas
@@ -522,10 +589,10 @@ export default function HeroScene({ animate }: { animate: boolean }) {
       aria-hidden
     >
       <ambientLight intensity={0.9} />
-      <directionalLight position={[4, 5, 5]} intensity={2.15} color="#F7FCFC" />
-      <pointLight position={[-4, -2, 2]} intensity={18} color={TEAL} />
+      <directionalLight position={[4, 5, 5]} intensity={2.15} color={palette.light} />
+      <pointLight position={[-4, -2, 2]} intensity={18} color={palette.teal} />
       <pointLight position={[3, -3, 4]} intensity={8} color="#FFFFFF" />
-      <Scene animate={animate} onDragChange={setDragging} />
+      <Scene animate={animate} palette={palette} onDragChange={setDragging} />
     </Canvas>
   );
 }

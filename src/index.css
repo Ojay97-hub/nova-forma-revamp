@@ -5,6 +5,56 @@
 @layer base {
   :root {
     color-scheme: light;
+    --color-cream: 247 252 252;
+    --color-ivory: 255 255 255;
+    --color-ink: 15 34 51;
+    --color-ink-soft: 49 80 102;
+    --color-ink-faint: 110 137 153;
+    --color-navy-mist: 231 241 243;
+    --color-teal-soft: 207 247 243;
+    --color-teal-deep: 19 142 141;
+    --color-lilac: 90 141 166;
+    --color-lilac-soft: 220 239 242;
+    --color-butter: 233 251 249;
+    --color-peach: 169 236 231;
+    --color-shadow: 15 34 51;
+    --focus-ring: 15 34 51;
+    --logo-ink: #0f2233;
+    --logo-accent: #3fd2c6;
+    --logo-ink-hover: #244963;
+    --logo-accent-hover: #7cf4ec;
+    --logo-ink-emissive: 0.015;
+    --logo-ink-pulse: 0.015;
+    --logo-ink-hover-emissive: 0.03;
+    --logo-ink-roughness: 0.36;
+    --scene-light: #f7fcfc;
+  }
+
+  :root.dark {
+    color-scheme: dark;
+    --color-cream: 5 12 18;
+    --color-ivory: 11 25 36;
+    --color-ink: 234 251 250;
+    --color-ink-soft: 169 206 213;
+    --color-ink-faint: 120 157 169;
+    --color-navy-mist: 20 48 61;
+    --color-teal-soft: 8 82 86;
+    --color-teal-deep: 127 245 237;
+    --color-lilac: 143 193 213;
+    --color-lilac-soft: 22 54 67;
+    --color-butter: 8 58 63;
+    --color-peach: 63 210 198;
+    --color-shadow: 63 210 198;
+    --focus-ring: 63 210 198;
+    --logo-ink: #ffffff;
+    --logo-accent: #3fd2c6;
+    --logo-ink-hover: #ffffff;
+    --logo-accent-hover: #97fff8;
+    --logo-ink-emissive: 0.2;
+    --logo-ink-pulse: 0.055;
+    --logo-ink-hover-emissive: 0.12;
+    --logo-ink-roughness: 0.2;
+    --scene-light: #ffffff;
   }
 
   html {
@@ -15,16 +65,17 @@
 
   body {
     @apply font-sans text-base;
+    background: rgb(var(--color-cream));
     text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background: #3fd2c6;
+    background: rgb(var(--color-teal-deep));
     color: #0f2233;
   }
 
   :focus-visible {
-    outline: 3px solid #0f2233;
+    outline: 3px solid rgb(var(--focus-ring));
     outline-offset: 3px;
     border-radius: 6px;
   }
@@ -60,16 +111,16 @@
 @layer utilities {
   /* Soft teal highlight behind inline words */
   .marker {
-    background-image: linear-gradient(transparent 58%, rgba(207, 247, 243, 0.95) 58%);
+    background-image: linear-gradient(transparent 58%, rgb(var(--color-teal-soft) / 0.95) 58%);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
     padding: 0 0.08em;
   }
   .marker-pink {
-    background-image: linear-gradient(transparent 58%, rgba(63, 210, 198, 0.28) 58%);
+    background-image: linear-gradient(transparent 58%, rgb(var(--color-teal-deep) / 0.32) 58%);
   }
   .marker-lilac {
-    background-image: linear-gradient(transparent 58%, rgba(220, 239, 242, 0.95) 58%);
+    background-image: linear-gradient(transparent 58%, rgb(var(--color-lilac-soft) / 0.95) 58%);
   }
 
   /* Hand-drawn wavy underline (inline SVG, no asset) */
@@ -83,7 +134,7 @@
 
   /* Subtle dotted texture for the white canvas */
   .dotgrid {
-    background-image: radial-gradient(rgba(15, 34, 51, 0.06) 1.4px, transparent 1.4px);
+    background-image: radial-gradient(rgb(var(--color-ink) / 0.07) 1.4px, transparent 1.4px);
     background-size: 24px 24px;
   }
 

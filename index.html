@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="bg-[#F7FCFC]">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,19 @@
       name="description"
       content="Nova Forma Designs - UK web design &amp; development by Owen Cotter. Clean, responsive, accessible websites tailored to your business."
     />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("nova-forma-theme");
+          var dark = stored === "dark";
+          document.documentElement.classList.toggle("dark", dark);
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+          document.documentElement.style.backgroundColor = dark ? "#050c12" : "#f7fcfc";
+        } catch (error) {
+          document.documentElement.style.backgroundColor = "#f7fcfc";
+        }
+      })();
+    </script>
     <title>Nova Forma Designs | Web Design &amp; Development UK</title>
     <link rel="icon" href="/logo.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

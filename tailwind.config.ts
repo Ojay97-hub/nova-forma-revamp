@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+const colorVar = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
+
 /**
  * Nova Forma Designs brand tokens.
  *
@@ -8,39 +10,41 @@ import type { Config } from "tailwindcss";
  * working while the visual scheme follows the new logo.
  */
 export default {
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        cream: "#F7FCFC",
-        ivory: "#FFFFFF",
+        cream: colorVar("--color-cream"),
+        ivory: colorVar("--color-ivory"),
+        paper: "#F7FCFC",
         ink: {
-          DEFAULT: "#0F2233",
-          soft: "#315066",
-          faint: "#6E8999",
+          DEFAULT: colorVar("--color-ink"),
+          soft: colorVar("--color-ink-soft"),
+          faint: colorVar("--color-ink-faint"),
         },
         navy: {
           DEFAULT: "#0F2233",
           soft: "#315066",
-          mist: "#E7F1F3",
+          mist: colorVar("--color-navy-mist"),
         },
         teal: {
           DEFAULT: "#3FD2C6",
-          soft: "#CFF7F3",
-          deep: "#138E8D",
+          soft: colorVar("--color-teal-soft"),
+          deep: colorVar("--color-teal-deep"),
         },
         pink: {
           DEFAULT: "#3FD2C6",
-          soft: "#CFF7F3",
-          deep: "#138E8D",
+          soft: colorVar("--color-teal-soft"),
+          deep: colorVar("--color-teal-deep"),
         },
         coral: "#16B8C3",
-        peach: "#A9ECE7",
+        peach: colorVar("--color-peach"),
         lilac: {
-          DEFAULT: "#5A8DA6",
-          soft: "#DCEFF2",
+          DEFAULT: colorVar("--color-lilac"),
+          soft: colorVar("--color-lilac-soft"),
         },
-        butter: "#E9FBF9",
+        butter: colorVar("--color-butter"),
         mint: "#3FD2C6",
       },
       fontFamily: {
@@ -55,11 +59,11 @@ export default {
         blob: "42% 58% 63% 37% / 41% 44% 56% 59%",
       },
       boxShadow: {
-        pop: "0 4px 0 0 #0F2233",
-        "pop-lg": "0 8px 0 0 #0F2233",
-        "pop-pink": "0 4px 0 0 #138E8D",
-        soft: "0 22px 50px -20px rgba(15,34,51,0.32)",
-        "soft-sm": "0 10px 30px -16px rgba(15,34,51,0.28)",
+        pop: "0 4px 0 0 rgb(var(--color-shadow) / 1)",
+        "pop-lg": "0 8px 0 0 rgb(var(--color-shadow) / 1)",
+        "pop-pink": "0 4px 0 0 rgb(var(--color-teal-deep) / 1)",
+        soft: "0 22px 50px -20px rgb(var(--color-shadow) / 0.32)",
+        "soft-sm": "0 10px 30px -16px rgb(var(--color-shadow) / 0.28)",
       },
       transitionTimingFunction: {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
