@@ -39,7 +39,7 @@ export default function Navbar() {
             <LogoMark className="h-7 w-7" />
           </span>
           <span className="font-display text-lg font-extrabold tracking-tight text-ink">
-            Nova Forma
+            Nova Forma Designs
           </span>
         </a>
 

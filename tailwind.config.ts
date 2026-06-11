@@ -45,7 +45,7 @@ export default {
       },
       fontFamily: {
         display: ["Outfit", "ui-sans-serif", "system-ui", "sans-serif"],
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["DM Sans", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       letterSpacing: {

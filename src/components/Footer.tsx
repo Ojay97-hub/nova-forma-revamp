@@ -71,12 +71,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <p
-          aria-hidden
-          className="mt-14 select-none font-display text-[14vw] font-extrabold leading-none tracking-tight text-cream/50 lg:text-[9.5rem]"
-        >
-          Nova Forma
-        </p>
+        <div aria-hidden className="mt-14 select-none leading-none tracking-tight">
+          <p className="font-display text-[14vw] font-extrabold leading-none tracking-tight text-cream/50 lg:text-[9.5rem]">
+            Nova Forma
+          </p>
+          <p className="font-display text-[4vw] font-semibold tracking-widest text-cream/25 lg:text-[2.6rem]">
+            Designs
+          </p>
+        </div>
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t-2 border-cream/10 pt-6 font-mono text-[11px] uppercase tracking-eyebrow text-cream/70">
           <span>© {new Date().getFullYear()} Nova Forma Designs. All rights reserved.</span>
