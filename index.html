@@ -21,12 +21,116 @@
       })();
     </script>
     <title>Nova Forma Designs | Web Design &amp; Development UK</title>
+    <!--
+      Static splash for the window between first paint and React booting.
+      The coin's size and its 144px offset above centre match the loading
+      screen's, so when Loader.tsx removes this the mark keeps spinning in
+      place and the progress UI simply assembles around it.
+    -->
+    <style>
+      #boot {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: #f7fcfc;
+        --boot-ink: #0f2233;
+        --boot-accent: #3fd2c6;
+        --boot-face: #ffffff;
+      }
+      :root.dark #boot {
+        background: #050c12;
+        --boot-ink: #ffffff;
+        --boot-face: #0b1924;
+      }
+      #boot-coin {
+        position: absolute;
+        top: calc(50% - 144px);
+        left: 50%;
+        width: 112px;
+        height: 112px;
+        margin: -56px 0 0 -56px;
+        perspective: 1200px;
+      }
+      #boot-spin {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+        animation: boot-spin 2.2s linear infinite;
+      }
+      #boot-spin > span {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--boot-ink);
+        border-radius: 9999px;
+        background: var(--boot-face);
+        box-shadow: 0 8px 0 0 var(--boot-ink);
+        backface-visibility: hidden;
+      }
+      #boot-spin > span + span {
+        transform: rotateY(180deg);
+      }
+      #boot-spin > span + span svg {
+        transform: scaleX(-1);
+      }
+      #boot-spin svg {
+        width: 64px;
+        height: 64px;
+      }
+      @keyframes boot-spin {
+        to {
+          transform: rotateY(360deg);
+        }
+      }
+      @media (min-width: 640px) {
+        #boot-coin {
+          width: 128px;
+          height: 128px;
+          margin: -64px 0 0 -64px;
+        }
+        #boot-spin svg {
+          width: 72px;
+          height: 72px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #boot-spin {
+          animation: none;
+        }
+      }
+    </style>
     <link rel="icon" href="/logo.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <noscript><style>#boot{display:none}</style></noscript>
+    <div id="boot" aria-hidden="true">
+      <div id="boot-coin">
+        <div id="boot-spin">
+          <span>
+            <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M17.5 154.028C17.5 154.028 20.4999 79.0279 23.5 57.5279C26.5 36.0279 38.2414 41.5 41.5 46C44.7586 50.5 51 61.4721 58 70.5C65 79.5279 83 91.5 87 101.5C91 111.5 87 154 87 154L63.765 154.028C63.765 154.028 59 93.4721 58 91C57 88.5279 49 77.0168 39.5 79.0279C30 81.039 45 154.028 45 154.028H17.5Z" fill="var(--boot-ink)"/>
+              <path d="M97.9999 105.111C101.5 95.3334 127.5 78.5 135.5 66C143.5 53.5 152 34.5 170 66C180.088 83.6541 150.5 96.5 140 101C129.5 105.5 121.176 105.484 117 109C107.5 117 108.723 138.519 108.723 154H97.9999C97.9999 154 94.4999 114.889 97.9999 105.111Z" fill="var(--boot-ink)"/>
+              <path d="M161.991 128.22C154.982 128.669 146.818 128.22 146.818 128.22C138.7 128.22 132.388 131.306 127.845 136.786C124.062 141.348 121.307 154.106 120.198 154.106C119.09 154.106 118 154.106 118 154.106C118 154.106 119.765 134.233 123.299 127.77C127.04 120.928 133.306 116.403 144.485 115.498C144.485 115.498 145.087 115.456 145.471 115.418C154.796 114.486 160 107.558 165.733 102.558C171.467 97.5584 169 127.77 161.991 128.22Z" fill="var(--boot-accent)"/>
+              <path d="M66.6819 34.5C70.8486 33 89.1818 61 95.1818 61C101.182 61 118.015 33 121.849 33C125.682 33 133.182 42.5 135.182 47C137.182 51.5 103.182 89 95.1818 89C87.1818 89 52.1819 51.5 55.1818 47C58.1818 42.5 62.5152 36 66.6819 34.5Z" fill="var(--boot-ink)"/>
+              <path d="M94.9997 16C105 16 121.944 20 117.5 25C113.055 30 99.4999 51 94.9997 50.5C90.4996 50 75.4998 30.5 71.9999 26C68.5 21.5 84.9996 16 94.9997 16Z" fill="var(--boot-accent)"/>
+            </svg>
+          </span>
+          <span>
+            <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M17.5 154.028C17.5 154.028 20.4999 79.0279 23.5 57.5279C26.5 36.0279 38.2414 41.5 41.5 46C44.7586 50.5 51 61.4721 58 70.5C65 79.5279 83 91.5 87 101.5C91 111.5 87 154 87 154L63.765 154.028C63.765 154.028 59 93.4721 58 91C57 88.5279 49 77.0168 39.5 79.0279C30 81.039 45 154.028 45 154.028H17.5Z" fill="var(--boot-ink)"/>
+              <path d="M97.9999 105.111C101.5 95.3334 127.5 78.5 135.5 66C143.5 53.5 152 34.5 170 66C180.088 83.6541 150.5 96.5 140 101C129.5 105.5 121.176 105.484 117 109C107.5 117 108.723 138.519 108.723 154H97.9999C97.9999 154 94.4999 114.889 97.9999 105.111Z" fill="var(--boot-ink)"/>
+              <path d="M161.991 128.22C154.982 128.669 146.818 128.22 146.818 128.22C138.7 128.22 132.388 131.306 127.845 136.786C124.062 141.348 121.307 154.106 120.198 154.106C119.09 154.106 118 154.106 118 154.106C118 154.106 119.765 134.233 123.299 127.77C127.04 120.928 133.306 116.403 144.485 115.498C144.485 115.498 145.087 115.456 145.471 115.418C154.796 114.486 160 107.558 165.733 102.558C171.467 97.5584 169 127.77 161.991 128.22Z" fill="var(--boot-accent)"/>
+              <path d="M66.6819 34.5C70.8486 33 89.1818 61 95.1818 61C101.182 61 118.015 33 121.849 33C125.682 33 133.182 42.5 135.182 47C137.182 51.5 103.182 89 95.1818 89C87.1818 89 52.1819 51.5 55.1818 47C58.1818 42.5 62.5152 36 66.6819 34.5Z" fill="var(--boot-ink)"/>
+              <path d="M94.9997 16C105 16 121.944 20 117.5 25C113.055 30 99.4999 51 94.9997 50.5C90.4996 50 75.4998 30.5 71.9999 26C68.5 21.5 84.9996 16 94.9997 16Z" fill="var(--boot-accent)"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

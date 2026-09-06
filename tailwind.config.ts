@@ -85,6 +85,18 @@ export default {
           "0%, 100%": { transform: "translateY(0) rotate(-2deg)" },
           "50%": { transform: "translateY(-10px) rotate(2deg)" },
         },
+        /* Loading screen: the brand mark turning like a struck coin. */
+        "coin-spin": {
+          to: { transform: "rotateY(360deg)" },
+        },
+        /* Loading screen: diagonal hatching crawling along the progress bar. */
+        stripes: {
+          to: { "background-position": "32px 0" },
+        },
+        "pop-in": {
+          from: { opacity: "0", transform: "translateY(10px) scale(0.92)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
       },
       animation: {
         wiggle: "wiggle 0.4s ease-in-out infinite",
@@ -92,6 +104,11 @@ export default {
         "float-slow": "float 8s ease-in-out infinite",
         "spin-slow": "spin-slow 14s linear infinite",
         "bob-tilt": "bob-tilt 6s ease-in-out infinite",
+        "coin-spin": "coin-spin 2.2s linear infinite",
+        /* One decelerating turn that settles the mark face-on at 100%. */
+        "coin-land": "coin-spin 0.9s cubic-bezier(0.16, 1, 0.3, 1) both",
+        stripes: "stripes 0.8s linear infinite",
+        "pop-in": "pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both",
       },
     },
   },

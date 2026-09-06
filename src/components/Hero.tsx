@@ -1,15 +1,15 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { gsap, splitWords } from "../lib/animations";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import MagneticButton from "./MagneticButton";
 import LogoMark from "./ui/LogoMark";
-// Lazy-loaded so three.js stays out of the critical bundle
+// Split out so three.js stays off the critical path — the loading screen
+// imports and caches this chunk before the site is ever revealed.
 const HeroScene = lazy(() => import("./three/HeroScene"));
 
-export default function Hero() {
+export default function Hero({ entered }: { entered: boolean }) {
   const root = useRef<HTMLElement>(null);
   const reduced = usePrefersReducedMotion();
-  const [showScene, setShowScene] = useState(false);
 
   useEffect(() => {
     const el = root.current;
@@ -21,18 +21,24 @@ export default function Hero() {
       const words = h1 ? splitWords(h1) : [];
       if (reduced) return;
 
+      // Park the hero in its "before" state while the loading screen is up …
+      gsap.set(words, { yPercent: 120, rotate: -6 });
+      gsap.set("[data-hero-copy]", { autoAlpha: 0, y: 24 });
+      gsap.set("[data-hero-cta] > *", { autoAlpha: 0, y: 20 });
+      gsap.set("[data-hero-meta]", { autoAlpha: 0 });
+
+      // … and only play once the visitor has entered, so the entrance lands
+      // as the veil lifts rather than being spent behind it.
+      if (!entered) return;
+
       timeout = window.setTimeout(() => {
         // Entrance: words bounce up, followed by copy, CTAs, and meta.
         gsap
           .timeline({ defaults: { ease: "back.out(1.5)" } })
-          .fromTo(
-            words,
-            { yPercent: 120, rotate: -6 },
-            { yPercent: 0, rotate: 0, duration: 0.8, stagger: 0.05 },
-          )
-          .fromTo("[data-hero-copy]", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.5")
-          .fromTo("[data-hero-cta] > *", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.1 }, "-=0.4")
-          .fromTo("[data-hero-meta]", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.8 }, "-=0.3");
+          .to(words, { yPercent: 0, rotate: 0, duration: 0.8, stagger: 0.05 })
+          .to("[data-hero-copy]", { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.5")
+          .to("[data-hero-cta] > *", { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.1 }, "-=0.4")
+          .to("[data-hero-meta]", { autoAlpha: 1, duration: 0.8 }, "-=0.3");
 
         // Gentle parallax: the 3D logo drifts as the hero scrolls out.
         gsap.to("[data-hero-scene]", {
@@ -40,29 +46,14 @@ export default function Hero() {
           ease: "none",
           scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
         });
-      }, 900);
+      }, 250);
     }, el);
 
     return () => {
       window.clearTimeout(timeout);
       ctx.revert();
     };
-  }, [reduced]);
-
-  useEffect(() => {
-    if (reduced) return;
-
-    const reveal = () => setShowScene(true);
-    const timer = window.setTimeout(reveal, 4200);
-    window.addEventListener("pointerdown", reveal, { once: true, passive: true });
-    window.addEventListener("keydown", reveal, { once: true });
-
-    return () => {
-      window.clearTimeout(timer);
-      window.removeEventListener("pointerdown", reveal);
-      window.removeEventListener("keydown", reveal);
-    };
-  }, [reduced]);
+  }, [reduced, entered]);
 
   return (
     <section
@@ -78,14 +69,16 @@ export default function Hero() {
         aria-hidden
         className="pointer-events-auto relative order-2 z-10 mx-auto -mt-8 h-[380px] w-full max-w-md opacity-95 sm:h-[430px] lg:absolute lg:inset-y-20 lg:right-0 lg:order-none lg:mt-0 lg:h-auto lg:max-w-none lg:w-[52%] lg:z-20"
       >
-        <Suspense fallback={null}>
-          {showScene ? (
-            <HeroScene animate={!reduced} />
-          ) : (
+        {/* The chunk is already cached by the loading screen, so this mounts
+            straight into the live scene. The flat mark is only a safety net. */}
+        <Suspense
+          fallback={
             <div className="grid h-full w-full place-items-center">
               <LogoMark className="h-[min(78vw,360px)] w-[min(78vw,360px)] drop-shadow-[0_22px_42px_rgba(15,34,51,0.24)] lg:h-[min(38vw,520px)] lg:w-[min(38vw,520px)]" />
             </div>
-          )}
+          }
+        >
+          <HeroScene animate={!reduced} />
         </Suspense>
       </div>
 

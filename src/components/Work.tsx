@@ -11,7 +11,9 @@ type Project = {
   link: string;
   tags: string[];
   note: string;
+  /** Gradient shown behind the screenshot while it loads. */
   cover: string;
+  image: string;
   featured?: boolean;
 };
 
@@ -26,7 +28,20 @@ const PROJECTS: Project[] = [
     tags: ["Web Design", "Development", "E-commerce"],
     note: "Live & running 🏎️",
     cover: "linear-gradient(135deg, #0F2233 0%, #3FD2C6 100%)",
+    image: "/work/tdh-motors.jpg",
     featured: true,
+  },
+  {
+    name: "Eden Electrical",
+    blurb: "Solar, battery storage & EV charging — Kent and the South East.",
+    description:
+      "A trust-first site for a certified renewables installer. Built with an interactive cost calculator and a quote flow, so homeowners can price up solar, battery storage or EV charging before they ever pick up the phone.",
+    url: "eden-electrical.com",
+    link: "https://www.eden-electrical.com/",
+    tags: ["Web Design", "Development", "Lead Gen"],
+    note: "Powering Kent ⚡",
+    cover: "linear-gradient(135deg, #1E3A2B 0%, #E3C567 100%)",
+    image: "/work/eden-electrical.jpg",
   },
   {
     name: "Penmaen & Nicholaston Village Hall",
@@ -38,6 +53,7 @@ const PROJECTS: Project[] = [
     tags: ["Community", "Accessible", "Real Client"],
     note: "Live in the community 🏡",
     cover: "linear-gradient(135deg, #3FD2C6 0%, #F7FCFC 100%)",
+    image: "/work/penmaen-village-hall.jpg",
   },
   {
     name: "Portfolio v2.0",
@@ -49,6 +65,7 @@ const PROJECTS: Project[] = [
     tags: ["Portfolio", "UI Design", "Personal"],
     note: "The origin story ✨",
     cover: "linear-gradient(135deg, #DCEFF2 0%, #138E8D 100%)",
+    image: "/work/portfolio-v2.jpg",
   },
 ];
 
@@ -82,6 +99,9 @@ export default function Work() {
     return () => ctx.revert();
   }, [reduced]);
 
+  const featured = PROJECTS.filter((p) => p.featured);
+  const rest = PROJECTS.filter((p) => !p.featured);
+
   return (
     <section ref={root} id="work" className="dotgrid relative py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
@@ -93,13 +113,13 @@ export default function Work() {
             </h2>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-ink-soft">
-            Three projects so far — from a community hall in Gower to a luxury
+            Four projects so far — from a community hall in Gower to a luxury
             car dealership in the Chilterns. Every one matters deeply to me.
           </p>
         </div>
 
         {/* Featured project — full width */}
-        {PROJECTS.filter((p) => p.featured).map((p) => (
+        {featured.map((p) => (
           <article
             key={p.name}
             data-project
@@ -119,24 +139,16 @@ export default function Work() {
               </span>
 
               <BrowserFrame url={p.url}>
-                <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/7]" style={{ background: p.cover }}>
-                  <div className="absolute inset-0 p-5 sm:p-8">
-                    <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-lg border-2 border-paper/40 bg-paper/20" />
-                      <div className="h-4 w-1/3 max-w-24 rounded-full border border-paper/30 bg-paper/20" />
-                    </div>
-                    <div className="mt-5 h-8 w-full max-w-[72%] rounded-lg border-2 border-paper/30 bg-paper/20 sm:mt-6 sm:h-9 sm:w-3/5" />
-                    <div className="mt-3 h-5 w-1/2 rounded-lg border-2 border-paper/20 bg-paper/10 sm:h-6 sm:w-2/5" />
-                    <div className="mt-5 flex max-w-full gap-3">
-                      <div className="h-9 flex-1 rounded-full border-2 border-paper/40 bg-paper/30 sm:h-10 sm:max-w-32" />
-                      <div className="h-9 flex-1 rounded-full border-2 border-paper/20 bg-paper/10 sm:h-10 sm:max-w-28" />
-                    </div>
-                    <div className="absolute bottom-5 left-5 right-5 grid grid-cols-3 gap-2 sm:bottom-8 sm:left-auto sm:right-8 sm:gap-3">
-                      {[...Array(3)].map((_, i) => (
-                        <div key={i} className="h-16 rounded-xl border-2 border-paper/30 bg-paper/15 sm:h-20 sm:w-28" />
-                      ))}
-                    </div>
-                  </div>
+                <div className="relative aspect-[16/10] overflow-hidden" style={{ background: p.cover }}>
+                  <img
+                    src={p.image}
+                    alt={`Homepage of the ${p.name} website`}
+                    width={2000}
+                    height={1250}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  />
                 </div>
               </BrowserFrame>
             </a>
@@ -159,13 +171,13 @@ export default function Work() {
           </article>
         ))}
 
-        {/* Remaining projects — two column grid */}
-        <div className="grid gap-y-16 gap-x-8 md:grid-cols-2 md:gap-y-8">
-          {PROJECTS.filter((p) => !p.featured).map((p, i) => (
+        {/* Remaining projects — three across on large screens */}
+        <div className="grid gap-y-14 gap-x-6 lg:grid-cols-3 lg:gap-y-8">
+          {rest.map((p, i) => (
             <article
               key={p.name}
               data-project
-              className={`group relative block ${i % 2 === 1 ? "md:translate-y-10" : ""}`}
+              className={`group relative block ${i === 1 ? "lg:translate-y-10" : ""}`}
             >
               <a
                 href={p.link}
@@ -182,33 +194,31 @@ export default function Work() {
 
                 <BrowserFrame url={p.url}>
                   <div className="relative aspect-[16/10] overflow-hidden" style={{ background: p.cover }}>
-                    <div className="absolute inset-0 p-5">
-                      <div className="h-3.5 w-20 rounded-full border border-ink/30 bg-ivory/80" />
-                      <div className="mt-4 h-6 w-4/5 rounded-lg border-2 border-ink/30 bg-ivory/80" />
-                      <div className="mt-2 h-5 w-3/5 rounded-lg border border-ink/20 bg-ivory/60" />
-                      <div className="mt-4 flex gap-2">
-                        <div className="h-8 w-24 rounded-full border-2 border-ink/50 bg-ink/70" />
-                        <div className="h-8 w-20 rounded-full border-2 border-ink/30 bg-ivory/70" />
-                      </div>
-                    </div>
+                    <img
+                      src={p.image}
+                      alt={`Homepage of the ${p.name} website`}
+                      width={1400}
+                      height={875}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                    />
                   </div>
                 </BrowserFrame>
               </a>
 
-              <div className="mt-7 px-1 md:mt-4">
-                <div className="flex flex-wrap items-start justify-between gap-2">
-                  <h3 className="font-display text-xl font-extrabold text-ink group-hover:text-teal-deep">
-                    {p.name}
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {p.tags.map((t) => (
-                      <span key={t} className="rounded-full border-2 border-ink bg-cream px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-eyebrow text-ink">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+              <div className="mt-7 px-1 lg:mt-4">
+                <h3 className="font-display text-xl font-extrabold leading-tight text-ink group-hover:text-teal-deep">
+                  {p.name}
+                </h3>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {p.tags.map((t) => (
+                    <span key={t} className="rounded-full border-2 border-ink bg-cream px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-eyebrow text-ink">
+                      {t}
+                    </span>
+                  ))}
                 </div>
-                <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{p.description}</p>
+                <p className="mt-2.5 text-sm leading-relaxed text-ink-soft">{p.description}</p>
               </div>
             </article>
           ))}
