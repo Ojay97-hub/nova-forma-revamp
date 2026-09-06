@@ -2,6 +2,8 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 const BREVO_ENDPOINT = "https://api.brevo.com/v3/smtp/email";
 const FROM_EMAIL = "noreply@novaformadesigns.com";
+/** The name recipients see in their inbox — matches the verified Brevo sender. */
+const BRAND = "Nova Forma Designs";
 const OWNER_EMAIL = "owen.cotter@novaformadesigns.com";
 
 type Contact = { email: string; name?: string };
@@ -45,6 +47,42 @@ const INK = "#0F2233";
 const TEAL = "#3FD2C6";
 const CREAM = "#F5F0E8";
 const IVORY = "#FAFAF8";
+
+/** Honorifics people routinely type into a name field. */
+const TITLES = new Set([
+  "mr", "mrs", "ms", "miss", "mx", "dr", "doctor", "prof", "professor",
+  "sir", "dame", "lord", "lady", "rev", "reverend", "capt", "captain",
+]);
+
+/** Sentence-case a word, but only if it was typed all-caps or all-lower —
+ *  deliberate forms like "McDonald" are left exactly as the person wrote them. */
+function recase(word: string) {
+  if (word !== word.toUpperCase() && word !== word.toLowerCase()) return word;
+  return word.replace(/[^\s'-]+/g, (part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase());
+}
+
+/**
+ * Pull a usable first name out of whatever someone typed. "MR OWEN J COTTER"
+ * gives "Owen": titles and single-letter initials are skipped, and shouty
+ * input is calmed down. Returns null rather than greeting someone as "MR".
+ */
+function firstName(raw: string) {
+  for (const word of raw.trim().split(/\s+/)) {
+    const cleaned = word.replace(/[.,]/g, "");
+    if (!cleaned || cleaned.length === 1) continue;
+    if (TITLES.has(cleaned.toLowerCase())) continue;
+    return recase(cleaned);
+  }
+  return null;
+}
+
+const HTML_ENTITIES: Record<string, string> = {
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+};
+
+/** Everything below is attacker-controlled form input dropped into an HTML
+ *  email, so it gets escaped before it goes anywhere near a template. */
+const esc = (value: string) => value.replace(/[&<>"']/g, (c) => HTML_ENTITIES[c]);
 
 const base = (content: string) => `
 <!DOCTYPE html>
@@ -99,7 +137,7 @@ const notificationHtml = (name: string, email: string, phone: string | undefined
       <tr>
         <td style="padding:14px 16px; background:${CREAM}; border-radius:10px; border:2px solid ${INK}; margin-bottom:10px;">
           <p style="font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:${TEAL}; margin-bottom:4px;">Name</p>
-          <p style="font-size:15px; font-weight:600; color:${INK};">${name}</p>
+          <p style="font-size:15px; font-weight:600; color:${INK};">${esc(name)}</p>
         </td>
       </tr>
     </table>
@@ -107,7 +145,7 @@ const notificationHtml = (name: string, email: string, phone: string | undefined
       <tr>
         <td style="padding:14px 16px; background:${CREAM}; border-radius:10px; border:2px solid ${INK};">
           <p style="font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:${TEAL}; margin-bottom:4px;">Email</p>
-          <a href="mailto:${email}" style="font-size:15px; font-weight:600; color:${INK};">${email}</a>
+          <a href="mailto:${esc(email)}" style="font-size:15px; font-weight:600; color:${INK};">${esc(email)}</a>
         </td>
       </tr>
     </table>
@@ -116,7 +154,7 @@ const notificationHtml = (name: string, email: string, phone: string | undefined
       <tr>
         <td style="padding:14px 16px; background:${CREAM}; border-radius:10px; border:2px solid ${INK};">
           <p style="font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:${TEAL}; margin-bottom:4px;">Phone</p>
-          <p style="font-size:15px; font-weight:600; color:${INK};">${phone}</p>
+          <p style="font-size:15px; font-weight:600; color:${INK};">${esc(phone)}</p>
         </td>
       </tr>
     </table>` : ""}
@@ -124,19 +162,26 @@ const notificationHtml = (name: string, email: string, phone: string | undefined
       <tr>
         <td style="padding:14px 16px; background:${CREAM}; border-radius:10px; border:2px solid ${INK};">
           <p style="font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:${TEAL}; margin-bottom:8px;">Message</p>
-          <p style="font-size:14px; line-height:1.6; color:${INK}; white-space:pre-wrap;">${message}</p>
+          <p style="font-size:14px; line-height:1.6; color:${INK}; white-space:pre-wrap;">${esc(message)}</p>
         </td>
       </tr>
     </table>
 
-    <a href="mailto:${email}" style="display:inline-block; background:${TEAL}; color:${INK}; font-size:14px; font-weight:700; padding:14px 28px; border-radius:100px; border:2px solid ${INK};">
-      Reply to ${name} →
+    <a href="mailto:${esc(email)}" style="display:inline-block; background:${TEAL}; color:${INK}; font-size:14px; font-weight:700; padding:14px 28px; border-radius:100px; border:2px solid ${INK};">
+      Reply to ${esc(name)} →
     </a>
   `);
 
+/** "Thanks for reaching out, Owen!" — or just "Thanks for reaching out!"
+ *  when the name field holds nothing we can sensibly greet someone by. */
+const greeting = (name: string) => {
+  const first = firstName(name);
+  return first ? `Thanks for reaching out, ${esc(first)}!` : "Thanks for reaching out!";
+};
+
 const confirmationHtml = (name: string) =>
   base(`
-    <h2 style="font-size:26px; font-weight:800; color:${INK}; margin-bottom:12px;">Thanks for reaching out, ${name.split(" ")[0]}! 👋</h2>
+    <h2 style="font-size:26px; font-weight:800; color:${INK}; margin-bottom:12px;">${greeting(name)} 👋</h2>
     <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:24px;">
       Your message has landed safely. I'll get back to you — usually within one working day — to chat about your project.
     </p>
@@ -175,7 +220,7 @@ const notificationText = (name: string, email: string, phone: string | undefined
 
 const confirmationText = (name: string) =>
   [
-    `Thanks for reaching out, ${name.split(" ")[0]}!`,
+    firstName(name) ? `Thanks for reaching out, ${firstName(name)}!` : "Thanks for reaching out!",
     "",
     "Your message has landed safely. I'll get back to you — usually within one",
     "working day — to chat about your project.",
@@ -205,7 +250,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // an enquiry. Only the notification reaching Owen decides the response.
   const [notification, confirmation] = await Promise.allSettled([
     sendEmail({
-      sender: { email: FROM_EMAIL, name: "Nova Forma" },
+      sender: { email: FROM_EMAIL, name: BRAND },
       to: [{ email: OWNER_EMAIL, name: "Owen Cotter" }],
       replyTo: { email, name },
       subject: `New enquiry from ${name}`,
@@ -213,7 +258,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       textContent: notificationText(name, email, phone, message),
     }),
     sendEmail({
-      sender: { email: FROM_EMAIL, name: "Owen @ Nova Forma" },
+      sender: { email: FROM_EMAIL, name: BRAND },
       to: [{ email, name }],
       replyTo: { email: OWNER_EMAIL, name: "Owen Cotter" },
       subject: "Thanks for getting in touch — Nova Forma",
