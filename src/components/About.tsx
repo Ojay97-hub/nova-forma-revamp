@@ -34,10 +34,16 @@ export default function About() {
         {/* Avatar card */}
         <div className="relative mx-auto w-full max-w-sm">
           <div className="animate-bob-tilt rounded-blob border-2 border-ink bg-gradient-to-br from-teal to-ink p-1 shadow-pop-lg">
-            <div className="grid aspect-square place-items-center rounded-blob bg-ivory">
-              <span className="font-display text-[8rem] font-extrabold leading-none text-ink sm:text-[10rem]">
-                OC
-              </span>
+            <div className="aspect-square overflow-hidden rounded-blob bg-ivory">
+              <img
+                src="/owen.jpg"
+                alt="Owen Cotter, founder of Nova Forma Designs, on the Gower coast with his two dogs"
+                width={800}
+                height={800}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
           <span className="absolute -right-3 top-6 rotate-6 rounded-full border-2 border-ink bg-ivory px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-ink shadow-pop">
