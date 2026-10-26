@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, type ThreeEvent, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, type ThreeEvent, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 type LogoPart = {
@@ -401,8 +401,6 @@ function Scene({
   palette: ScenePalette;
   onDragChange: (dragging: boolean) => void;
 }) {
-  const { viewport } = useThree();
-  const isMobile = viewport.width < 5;
   const root = useRef<THREE.Group>(null);
   const system = useRef<THREE.Group>(null);
   const drag = useRef({
@@ -451,7 +449,7 @@ function Scene({
     el.rotation.y = THREE.MathUtils.damp(el.rotation.y, targetY, drag.current.active ? 10 : 4, delta);
     el.rotation.x = THREE.MathUtils.damp(el.rotation.x, targetX, drag.current.active ? 10 : 4, delta);
     wrapper.position.y = (animate ? Math.sin(t * 0.7) * 0.05 : 0) + hoverBoost * 0.08;
-    wrapper.scale.setScalar(0.58 + intro * 0.04 + hoverBoost * 0.035 + (animate ? Math.sin(t * 0.6) * 0.006 : 0));
+    wrapper.scale.setScalar(0.64 + intro * 0.04 + hoverBoost * 0.035 + (animate ? Math.sin(t * 0.6) * 0.006 : 0));
   });
 
   const updateHoverTarget = (event: ThreeEvent<PointerEvent>) => {
@@ -531,8 +529,8 @@ function Scene({
   return (
     <group
       ref={root}
-      scale={0.62}
-      position={[isMobile ? -0.08 : 0.16, -0.02, 0]}
+      scale={0.68}
+      position={[0, -0.02, 0]}
     >
       <mesh
         position={[0, 0, 0.7]}
@@ -583,7 +581,7 @@ export default function HeroScene({ animate }: { animate: boolean }) {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 5.8], fov: 34 }}
+      camera={{ position: [0, 0, 4.8], fov: 38 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ cursor: dragging ? "grabbing" : "grab", touchAction: "none" }}
       aria-hidden

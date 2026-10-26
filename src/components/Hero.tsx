@@ -67,7 +67,7 @@ export default function Hero({ entered }: { entered: boolean }) {
       <div
         data-hero-scene
         aria-hidden
-        className="pointer-events-auto relative order-2 z-10 mx-auto -mt-8 h-[380px] w-full max-w-md opacity-95 sm:h-[430px] lg:absolute lg:inset-y-20 lg:right-0 lg:order-none lg:mt-0 lg:h-auto lg:max-w-none lg:w-[52%] lg:z-20"
+        className="pointer-events-auto relative order-2 z-10 mx-auto -mt-8 h-[380px] w-full max-w-md opacity-95 sm:h-[430px] lg:absolute lg:inset-y-8 lg:right-0 lg:order-none lg:mt-0 lg:h-auto lg:max-w-none lg:w-[52%] lg:z-20"
       >
         {/* The chunk is already cached by the loading screen, so this mounts
             straight into the live scene. The flat mark is only a safety net. */}
@@ -82,7 +82,7 @@ export default function Hero({ entered }: { entered: boolean }) {
         </Suspense>
       </div>
 
-      <div className="relative z-10 order-1 mx-auto w-full max-w-6xl px-4 pb-8 pt-36 sm:px-8 lg:order-none lg:pb-24">
+      <div className="relative z-10 order-1 mx-auto w-full max-w-6xl px-4 pb-6 pt-24 sm:px-8 lg:order-none lg:pb-14">
         <div className="max-w-xl lg:max-w-[48%]">
           <p className="eyebrow mb-7">
             <span className="text-teal-deep">✦</span> Web Design &amp; Development · UK
