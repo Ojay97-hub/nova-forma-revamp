@@ -20,7 +20,7 @@ const SERVICES: Service[] = [
   },
   {
     title: "Responsive Development",
-    copy: "Seamless, reliable experiences across every device — desktop, tablet and mobile — built with clean, modern code.",
+    copy: "Seamless, reliable experiences across every device (desktop, tablet and mobile), built with clean, modern code.",
     icon: "📱",
     badge: "Every device",
     accent: "bg-navy-mist",
@@ -34,7 +34,7 @@ const SERVICES: Service[] = [
   },
   {
     title: "Brand Identity",
-    copy: "Cohesive visual identities — colour, type and style — that reflect your values and make you instantly recognisable.",
+    copy: "Cohesive visual identities (colour, type and style) that reflect your values and make you instantly recognisable.",
     icon: "✨",
     badge: "Stand out",
     accent: "bg-ivory",

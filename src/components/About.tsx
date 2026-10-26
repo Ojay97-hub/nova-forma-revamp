@@ -58,7 +58,7 @@ export default function About() {
         <div>
           <p className="eyebrow mb-7">🙋 About me</p>
           <h2 data-about-title className="display-lg font-display font-extrabold text-ink">
-            I make websites that work — and feel like{" "}
+            I make websites that work and feel like{" "}
             <span className="marker-pink">you</span>.
           </h2>
 
@@ -73,7 +73,7 @@ export default function About() {
             every project gets my full attention. So far I&apos;ve built a
             community venue site for a Gower village hall, a full inventory
             website for a luxury car dealer in the Chilterns, and my own
-            portfolio &mdash; and I&apos;m always looking for the next one.
+            portfolio, and I&apos;m always looking for the next one.
           </p>
           <p data-about-copy className="mt-4 max-w-lg text-base leading-relaxed text-ink-soft">
             I believe good websites don&apos;t need to be overcomplicated. They

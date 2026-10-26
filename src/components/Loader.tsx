@@ -278,7 +278,7 @@ export default function Loader({
         aria-hidden
         className="absolute inset-x-0 bottom-6 text-center font-mono text-[10px] uppercase tracking-eyebrow text-ink-faint"
       >
-        nova forma — &ldquo;new form&rdquo; ✶
+        nova forma &ldquo;new form&rdquo; ✶
       </p>
     </div>
   );

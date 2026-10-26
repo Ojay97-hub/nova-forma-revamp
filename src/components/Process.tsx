@@ -16,7 +16,7 @@ const STEPS: Step[] = [
     title: "Chat",
     icon: "💬",
     accent: "bg-teal",
-    copy: "We have a friendly conversation about your project — your goals, your audience, your budget. No jargon, no pressure.",
+    copy: "We have a friendly conversation about your project: your goals, your audience, your budget. No jargon, no pressure.",
   },
   {
     n: "02",
@@ -37,7 +37,7 @@ const STEPS: Step[] = [
     title: "Build",
     icon: "🛠️",
     accent: "bg-ivory",
-    copy: "Clean, responsive, accessible code — tested across all devices. Your site is built to be fast and easy to maintain.",
+    copy: "Clean, responsive, accessible code, tested across all devices. Your site is built to be fast and easy to maintain.",
   },
   {
     n: "05",
@@ -51,7 +51,7 @@ const STEPS: Step[] = [
     title: "Support",
     icon: "🌱",
     accent: "bg-navy-mist",
-    copy: "Honest support as your site grows. I'm not going anywhere — and I'll always give you a straight answer.",
+    copy: "Honest support as your site grows. I'm not going anywhere, and I'll always give you a straight answer.",
   },
 ];
 
@@ -130,7 +130,7 @@ export default function Process() {
             ✨ How I work
           </span>
           <h2 data-process-title className="display-lg mt-7 max-w-3xl font-display font-extrabold text-paper">
-            A clear, honest process — no surprises.
+            A clear, honest process with no surprises.
           </h2>
         </div>
 

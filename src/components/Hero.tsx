@@ -97,7 +97,7 @@ export default function Hero({ entered }: { entered: boolean }) {
           </h1>
 
           <p data-hero-copy className="mt-8 max-w-sm text-lg leading-relaxed text-ink-soft">
-            Hi, I&apos;m Owen &mdash; founder of Nova Forma Designs. I help small
+            Hi, I&apos;m Owen, founder of Nova Forma Designs. I help small
             businesses, local organisations and independent projects get a clean,
             professional website they&apos;re proud to share.
           </p>

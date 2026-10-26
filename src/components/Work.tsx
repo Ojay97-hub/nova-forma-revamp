@@ -20,7 +20,7 @@ type Project = {
 const PROJECTS: Project[] = [
   {
     name: "TDH Motors",
-    blurb: "Performance & luxury car dealer — Aylesbury, Buckinghamshire.",
+    blurb: "Performance & luxury car dealer in Aylesbury, Buckinghamshire.",
     description:
       "A full website for a hand-picked performance and luxury car dealership. Built with a browsable inventory, vehicle detail pages and an enquiry system, designed to feel as premium as the cars they sell.",
     url: "tdhmotors.co.uk",
@@ -33,7 +33,7 @@ const PROJECTS: Project[] = [
   },
   {
     name: "Eden Electrical",
-    blurb: "Solar, battery storage & EV charging — Kent and the South East.",
+    blurb: "Solar, battery storage & EV charging in Kent and the South East.",
     description:
       "A trust-first site for a certified renewables installer. Built with an interactive cost calculator and a quote flow, so homeowners can price up solar, battery storage or EV charging before they ever pick up the phone.",
     url: "eden-electrical.com",
@@ -57,7 +57,7 @@ const PROJECTS: Project[] = [
   },
   {
     name: "Portfolio v2.0",
-    blurb: "My own portfolio — where it all began.",
+    blurb: "My own portfolio, where it all began.",
     description:
       "My personal portfolio website, showcasing projects, coursework and the journey that shaped my approach to web design and development. Built and iterated as I've grown.",
     url: "ojay97-hub.github.io",
@@ -113,7 +113,7 @@ export default function Work() {
             </h2>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-ink-soft">
-            Four projects so far — from a community hall in Gower to a luxury
+            Four projects so far, from a community hall in Gower to a luxury
             car dealership in the Chilterns. Every one matters deeply to me.
           </p>
         </div>
@@ -130,7 +130,7 @@ export default function Work() {
               target="_blank"
               rel="noopener noreferrer"
               className="relative block transition-transform duration-300 ease-bounce group-hover:-translate-y-2"
-              aria-label={`Visit ${p.name} — ${p.blurb}`}
+              aria-label={`Visit ${p.name}: ${p.blurb}`}
             >
               <span
                 className="absolute -right-2 -top-3 z-30 rotate-6 rounded-lg border-2 border-ink bg-ivory px-3 py-1 font-mono text-[11px] font-bold text-ink shadow-pop transition-transform duration-300 group-hover:rotate-12"
@@ -184,7 +184,7 @@ export default function Work() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative block transition-transform duration-300 ease-bounce group-hover:-translate-y-2 group-hover:rotate-[-1deg]"
-                aria-label={`Visit ${p.name} — ${p.blurb}`}
+                aria-label={`Visit ${p.name}: ${p.blurb}`}
               >
                 <span
                   className="absolute -right-2 -top-3 z-30 rotate-6 rounded-lg border-2 border-ink bg-ivory px-3 py-1 font-mono text-[11px] font-bold text-ink shadow-pop transition-transform duration-300 group-hover:rotate-12"

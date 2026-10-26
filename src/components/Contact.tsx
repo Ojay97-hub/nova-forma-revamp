@@ -66,7 +66,7 @@ export default function Contact() {
           </h2>
           <p data-contact-block className="mt-6 max-w-md text-lg leading-relaxed text-ink-soft">
             I'd love to hear about what you're building. Drop me a message and
-            I'll get back to you — no jargon, no pressure, just an honest
+            I'll get back to you. No jargon, no pressure, just an honest
             conversation about how I can help.
           </p>
 
@@ -108,7 +108,7 @@ export default function Contact() {
                 Message sent!
               </p>
               <p className="mt-3 text-sm font-medium text-ink-soft">
-                Thanks for reaching out. I'll be in touch soon — usually within
+                Thanks for reaching out. I'll be in touch soon, usually within
                 one working day. Looking forward to hearing more about your
                 project!
               </p>

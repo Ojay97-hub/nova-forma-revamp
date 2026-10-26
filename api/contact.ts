@@ -183,7 +183,7 @@ const confirmationHtml = (name: string) =>
   base(`
     <h2 style="font-size:26px; font-weight:800; color:${INK}; margin-bottom:12px;">${greeting(name)} 👋</h2>
     <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:24px;">
-      Your message has landed safely. I'll get back to you — usually within one working day — to chat about your project.
+      Your message has landed safely. I'll get back to you, usually within one working day, to chat about your project.
     </p>
     <p style="font-size:15px; line-height:1.7; color:#444; margin-bottom:32px;">
       In the meantime, feel free to take another look around the site or reach out directly at
@@ -193,7 +193,7 @@ const confirmationHtml = (name: string) =>
       <tr>
         <td>
           <p style="font-size:13px; font-weight:700; color:${TEAL}; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px;">What happens next</p>
-          <p style="font-size:14px; line-height:1.6; color:${INK};">I'll review your message and come back with an honest take on how I can help — no jargon, no pressure.</p>
+          <p style="font-size:14px; line-height:1.6; color:${INK};">I'll review your message and come back with an honest take on how I can help. No jargon, no pressure.</p>
         </td>
       </tr>
     </table>
@@ -222,12 +222,12 @@ const confirmationText = (name: string) =>
   [
     firstName(name) ? `Thanks for reaching out, ${firstName(name)}!` : "Thanks for reaching out!",
     "",
-    "Your message has landed safely. I'll get back to you — usually within one",
-    "working day — to chat about your project.",
+    "Your message has landed safely. I'll get back to you, usually within one",
+    "working day, to chat about your project.",
     "",
     `In the meantime, you can reach me directly at ${OWNER_EMAIL}.`,
     "",
-    `— Owen Cotter, Nova Forma Designs · ${SITE}`,
+    `Owen Cotter, Nova Forma Designs · ${SITE}`,
   ].join("\n");
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -261,7 +261,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       sender: { email: FROM_EMAIL, name: BRAND },
       to: [{ email, name }],
       replyTo: { email: OWNER_EMAIL, name: "Owen Cotter" },
-      subject: "Thanks for getting in touch — Nova Forma",
+      subject: "Thanks for getting in touch | Nova Forma",
       htmlContent: confirmationHtml(name),
       textContent: confirmationText(name),
     }),
