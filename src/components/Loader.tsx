@@ -177,7 +177,7 @@ export default function Loader({
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-teal-soft/40 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-teal-soft/40 to-transparent dark:from-teal-soft/10"
       />
 
       <div className="relative flex w-[min(92vw,25rem)] flex-col items-center gap-6">

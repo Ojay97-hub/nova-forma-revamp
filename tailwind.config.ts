@@ -6,6 +6,7 @@ const colorVar = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
  * Nova Forma Designs brand tokens.
  *
  * Palette: crisp white surfaces, deep navy contrast, and bright teal accents.
+ * Dark mode swaps teal for amber and gold on charcoal via the --color-teal token.
  * Some legacy colour names remain as aliases so existing utility classes keep
  * working while the visual scheme follows the new logo.
  */
@@ -24,28 +25,28 @@ export default {
           faint: colorVar("--color-ink-faint"),
         },
         navy: {
-          DEFAULT: "#0F2233",
+          DEFAULT: colorVar("--color-navy"),
           soft: "#315066",
           mist: colorVar("--color-navy-mist"),
         },
         teal: {
-          DEFAULT: "#3FD2C6",
+          DEFAULT: colorVar("--color-teal"),
           soft: colorVar("--color-teal-soft"),
           deep: colorVar("--color-teal-deep"),
         },
         pink: {
-          DEFAULT: "#3FD2C6",
+          DEFAULT: colorVar("--color-teal"),
           soft: colorVar("--color-teal-soft"),
           deep: colorVar("--color-teal-deep"),
         },
-        coral: "#16B8C3",
+        coral: colorVar("--color-coral"),
         peach: colorVar("--color-peach"),
         lilac: {
           DEFAULT: colorVar("--color-lilac"),
           soft: colorVar("--color-lilac-soft"),
         },
         butter: colorVar("--color-butter"),
-        mint: "#3FD2C6",
+        mint: colorVar("--color-teal"),
       },
       fontFamily: {
         display: ["Outfit", "ui-sans-serif", "system-ui", "sans-serif"],

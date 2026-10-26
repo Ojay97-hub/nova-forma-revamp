@@ -51,11 +51,11 @@ export default function Contact() {
   };
 
   const field =
-    "w-full rounded-xl border-2 border-ink bg-cream px-4 py-3 text-sm font-medium text-ink placeholder:text-ink/40 transition-colors duration-200 focus:border-teal focus:bg-ivory focus:outline-none";
+    "w-full rounded-xl border-2 border-ink bg-cream px-4 py-3 text-sm font-medium text-ink placeholder:text-ink/40 dark:placeholder:text-ink/70 transition-colors duration-200 focus:border-teal focus:bg-ivory focus:outline-none";
 
   return (
     <section ref={root} id="contact" className="relative overflow-hidden py-24 sm:py-32">
-      <div aria-hidden className="absolute -bottom-[20%] right-[-8%] h-[55vmin] w-[55vmin] rounded-full bg-teal-soft/55 blur-[120px]" />
+      <div aria-hidden className="absolute -bottom-[20%] right-[-8%] h-[55vmin] w-[55vmin] rounded-full bg-teal-soft/55 blur-[120px] dark:bg-teal-soft/10" />
       <Sparkle className="absolute left-[8%] top-[18%] hidden animate-spin-slow text-teal lg:block" size={44} />
 
       <div className="relative mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
@@ -102,7 +102,7 @@ export default function Contact() {
 
         <div data-contact-block>
           {sent ? (
-            <div className="relative flex h-full min-h-[340px] flex-col items-start justify-center rounded-3xl border-2 border-ink bg-teal-soft p-10 shadow-pop-lg">
+            <div className="relative flex h-full min-h-[340px] flex-col items-start justify-center rounded-3xl border-2 border-ink bg-teal-soft p-10 shadow-pop-lg dark:bg-ivory">
               <span className="text-5xl">🎉</span>
               <p className="mt-4 font-display text-3xl font-extrabold text-ink">
                 Message sent!

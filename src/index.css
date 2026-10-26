@@ -10,7 +10,10 @@
     --color-ink: 15 34 51;
     --color-ink-soft: 49 80 102;
     --color-ink-faint: 110 137 153;
+    --color-navy: 15 34 51;
     --color-navy-mist: 231 241 243;
+    --color-teal: 63 210 198;
+    --color-coral: 22 184 195;
     --color-teal-soft: 207 247 243;
     --color-teal-deep: 19 142 141;
     --color-lilac: 90 141 166;
@@ -32,24 +35,28 @@
 
   :root.dark {
     color-scheme: dark;
-    --color-cream: 5 12 18;
-    --color-ivory: 11 25 36;
-    --color-ink: 234 251 250;
-    --color-ink-soft: 169 206 213;
-    --color-ink-faint: 120 157 169;
-    --color-navy-mist: 20 48 61;
-    --color-teal-soft: 8 82 86;
-    --color-teal-deep: 127 245 237;
-    --color-lilac: 143 193 213;
-    --color-lilac-soft: 22 54 67;
-    --color-butter: 8 58 63;
-    --color-peach: 63 210 198;
-    --color-shadow: 63 210 198;
-    --focus-ring: 63 210 198;
+    /* Charcoal surfaces (#1E2328 / #2A2E34 / #3B3F46) with amber and gold accents */
+    --color-cream: 30 35 40;
+    --color-ivory: 42 46 52;
+    --color-ink: 250 250 247;
+    --color-ink-soft: 214 217 222;
+    --color-ink-faint: 158 164 172;
+    --color-navy: 22 26 30;
+    --color-navy-mist: 59 63 70;
+    --color-teal: 245 179 1;
+    --color-coral: 244 164 10;
+    --color-teal-soft: 245 179 1;
+    --color-teal-deep: 254 208 83;
+    --color-lilac: 254 208 83;
+    --color-lilac-soft: 59 63 70;
+    --color-butter: 62 52 22;
+    --color-peach: 245 179 1;
+    --color-shadow: 245 179 1;
+    --focus-ring: 254 208 83;
     --logo-ink: #ffffff;
-    --logo-accent: #3fd2c6;
+    --logo-accent: #f5b301;
     --logo-ink-hover: #ffffff;
-    --logo-accent-hover: #97fff8;
+    --logo-accent-hover: #fed053;
     --logo-ink-emissive: 0.2;
     --logo-ink-pulse: 0.055;
     --logo-ink-hover-emissive: 0.12;
@@ -60,7 +67,7 @@
   html {
     @apply bg-cream text-ink antialiased;
     scrollbar-width: thin;
-    scrollbar-color: #3fd2c6 transparent;
+    scrollbar-color: rgb(var(--color-teal)) transparent;
   }
 
   body {
@@ -130,6 +137,9 @@
     background-position: bottom left;
     background-size: 100% 0.5em;
     padding-bottom: 0.32em;
+  }
+  :root.dark .doodle-underline {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='12' viewBox='0 0 120 12'%3E%3Cpath d='M2 8 Q 15 2 30 7 T 60 7 T 90 7 T 118 6' fill='none' stroke='%23F5B301' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
   }
 
   /* Subtle dotted texture for the white canvas */

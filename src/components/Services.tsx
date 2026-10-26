@@ -16,7 +16,7 @@ const SERVICES: Service[] = [
     copy: "Beautiful, user-friendly websites that engage your audience, represent your brand, and are a pleasure to use.",
     icon: "🎨",
     badge: "Most loved",
-    accent: "bg-teal",
+    accent: "bg-teal dark:[text-shadow:0_0_2px_rgb(0_0_0/0.9),0_2px_4px_rgb(0_0_0/0.5)]",
   },
   {
     title: "Responsive Development",
@@ -30,7 +30,7 @@ const SERVICES: Service[] = [
     copy: "No templates, no shortcuts. Each site is tailored specifically around your business needs and your users.",
     icon: "⚙️",
     badge: "Bespoke",
-    accent: "bg-teal-soft",
+    accent: "bg-teal-soft dark:[text-shadow:0_0_2px_rgb(0_0_0/0.9),0_2px_4px_rgb(0_0_0/0.5)]",
   },
   {
     title: "Brand Identity",

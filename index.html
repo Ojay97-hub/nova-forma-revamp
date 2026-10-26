@@ -14,7 +14,7 @@
           var dark = stored === "dark";
           document.documentElement.classList.toggle("dark", dark);
           document.documentElement.dataset.theme = dark ? "dark" : "light";
-          document.documentElement.style.backgroundColor = dark ? "#050c12" : "#f7fcfc";
+          document.documentElement.style.backgroundColor = dark ? "#1e2328" : "#f7fcfc";
         } catch (error) {
           document.documentElement.style.backgroundColor = "#f7fcfc";
         }
@@ -38,9 +38,10 @@
         --boot-face: #ffffff;
       }
       :root.dark #boot {
-        background: #050c12;
+        background: #1e2328;
         --boot-ink: #ffffff;
-        --boot-face: #0b1924;
+        --boot-accent: #f5b301;
+        --boot-face: #2a2e34;
       }
       #boot-coin {
         position: absolute;

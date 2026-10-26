@@ -61,7 +61,7 @@ export default function Hero({ entered }: { entered: boolean }) {
       id="top"
       className="dotgrid relative flex min-h-[100svh] flex-col items-stretch justify-center overflow-hidden lg:items-center"
     >
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-teal-soft/30 to-transparent" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-teal-soft/30 to-transparent dark:from-teal-soft/[0.07]" />
 
       {/* 3D logo — contained on mobile, full-bleed to the right on desktop */}
       <div

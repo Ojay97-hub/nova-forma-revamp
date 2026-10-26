@@ -15,7 +15,7 @@ const STEPS: Step[] = [
     n: "01",
     title: "Chat",
     icon: "💬",
-    accent: "bg-teal",
+    accent: "bg-teal dark:[text-shadow:0_0_2px_rgb(0_0_0/0.9),0_2px_4px_rgb(0_0_0/0.5)]",
     copy: "We have a friendly conversation about your project: your goals, your audience, your budget. No jargon, no pressure.",
   },
   {
@@ -29,7 +29,7 @@ const STEPS: Step[] = [
     n: "03",
     title: "Design",
     icon: "🎨",
-    accent: "bg-teal-soft",
+    accent: "bg-teal-soft dark:[text-shadow:0_0_2px_rgb(0_0_0/0.9),0_2px_4px_rgb(0_0_0/0.5)]",
     copy: "High-fidelity screens with your colour, type and personality. We refine together until it feels right and represents you.",
   },
   {
@@ -43,7 +43,7 @@ const STEPS: Step[] = [
     n: "05",
     title: "Launch",
     icon: "🚀",
-    accent: "bg-teal",
+    accent: "bg-teal dark:[text-shadow:0_0_2px_rgb(0_0_0/0.9),0_2px_4px_rgb(0_0_0/0.5)]",
     copy: "Final checks, accessibility review and go-live on a date that suits you. I'll walk you through everything before we ship.",
   },
   {

@@ -24,7 +24,7 @@ function applyTheme(theme: Theme) {
   const dark = theme === "dark";
   root.classList.toggle("dark", dark);
   root.dataset.theme = theme;
-  root.style.backgroundColor = dark ? "#050c12" : "#f7fcfc";
+  root.style.backgroundColor = dark ? "#1e2328" : "#f7fcfc";
 }
 
 export function useTheme() {
