@@ -54,7 +54,7 @@ const f = (n: number) => Math.round(n * 10) / 10;
 function dripPath({ width: W, base: b, drips, waves }: Board) {
   let px = -2;
   let py = b;
-  let d = `M -2 -2 L -2 ${b}`;
+  let d = `M -2 -8 L -2 ${b}`;
 
   // A long, gentle wave along the edge to (nx, b).
   const edgeTo = (nx: number, lift: number) => {
@@ -91,7 +91,7 @@ function dripPath({ width: W, base: b, drips, waves }: Board) {
   });
 
   edgeTo(W + 2, waves[drips.length] ?? 0);
-  return `${d} L ${W + 2} -2 Z`;
+  return `${d} L ${W + 2} -8 Z`;
 }
 
 const PATHS = { sm: dripPath(MOBILE), lg: dripPath(DESKTOP) };
