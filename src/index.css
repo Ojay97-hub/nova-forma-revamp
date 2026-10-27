@@ -31,6 +31,8 @@
     --logo-ink-hover-emissive: 0.03;
     --logo-ink-roughness: 0.36;
     --scene-light: #f7fcfc;
+    /* Tinted band for alternating sections, framed by ink rules */
+    --color-band: 230 248 246;
   }
 
   :root.dark {
@@ -62,6 +64,7 @@
     --logo-ink-hover-emissive: 0.12;
     --logo-ink-roughness: 0.2;
     --scene-light: #ffffff;
+    --color-band: 36 41 47;
   }
 
   html {
@@ -146,6 +149,40 @@
   .dotgrid {
     background-image: radial-gradient(rgb(var(--color-ink) / 0.07) 1.4px, transparent 1.4px);
     background-size: 24px 24px;
+  }
+
+  /* A section whose bottom edge drips into the next one (ui/PaintDrip.tsx).
+     It grows by --drip-h (added to its bottom padding), that strip is masked
+     to the drip outline, and the negative margin tucks the next section
+     underneath so the layout does not move. */
+  /* Drip strip height. It scales with the width of the page, so the artboard
+     is never stretched and the drips keep their proportions. The footer reads
+     it too, to keep its content clear of the drips. */
+  :root {
+    --drip-h: 18vw;
+  }
+  .drip-edge {
+    --drip-mask: var(--drip-mask-sm);
+    position: relative;
+    z-index: 1;
+    margin-bottom: calc(-1 * var(--drip-h));
+    -webkit-mask-image: linear-gradient(#000, #000), var(--drip-mask);
+    mask-image: linear-gradient(#000, #000), var(--drip-mask);
+    /* Solid down to the drip strip, overlapping it by 2px so no seam shows */
+    -webkit-mask-size: 100% calc(100% - var(--drip-h) + 2px), 100% var(--drip-h);
+    mask-size: 100% calc(100% - var(--drip-h) + 2px), 100% var(--drip-h);
+    -webkit-mask-position: 0 0, 0 100%;
+    mask-position: 0 0, 0 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  @media (min-width: 640px) {
+    :root {
+      --drip-h: min(8.33vw, 220px);
+    }
+    .drip-edge {
+      --drip-mask: var(--drip-mask-lg);
+    }
   }
 
   /* Per-word mask wrapper for headline reveals */

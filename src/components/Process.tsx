@@ -123,7 +123,7 @@ export default function Process() {
   }, [reduced]);
 
   return (
-    <section ref={root} id="process" className="overflow-hidden bg-navy text-paper">
+    <section ref={root} id="process" className="overflow-hidden border-t-2 border-ink bg-navy text-paper">
       <div className="flex min-h-[100svh] flex-col justify-center py-24 lg:py-0">
         <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
           <span className="inline-flex items-center gap-2 rounded-full border-2 border-paper bg-navy px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-eyebrow text-paper">

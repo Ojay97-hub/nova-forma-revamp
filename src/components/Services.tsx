@@ -57,7 +57,7 @@ export default function Services() {
   }, [reduced]);
 
   return (
-    <section ref={root} id="services" className="relative py-24 sm:py-32">
+    <section ref={root} id="services" className="dotgrid relative border-t-2 border-ink bg-band py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <p className="eyebrow mb-7">🧰 What I offer</p>
         <h2 data-services-title className="display-lg max-w-3xl font-display font-extrabold text-ink">

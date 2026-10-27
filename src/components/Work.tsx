@@ -103,7 +103,7 @@ export default function Work() {
   const rest = PROJECTS.filter((p) => !p.featured);
 
   return (
-    <section ref={root} id="work" className="dotgrid relative py-24 sm:py-32">
+    <section ref={root} id="work" className="dotgrid relative border-t-2 border-ink py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
           <div>

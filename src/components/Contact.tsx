@@ -3,6 +3,7 @@ import { gsap, revealWords, revealUp } from "../lib/animations";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import MagneticButton from "./MagneticButton";
 import Sparkle from "./ui/Sparkle";
+import { PaintDripOutline, paintDripStyle } from "./ui/PaintDrip";
 
 export default function Contact() {
   const root = useRef<HTMLElement>(null);
@@ -54,7 +55,8 @@ export default function Contact() {
     "w-full rounded-xl border-2 border-ink bg-cream px-4 py-3 text-sm font-medium text-ink placeholder:text-ink/40 dark:placeholder:text-ink/70 transition-colors duration-200 focus:border-teal focus:bg-ivory focus:outline-none";
 
   return (
-    <section ref={root} id="contact" className="relative overflow-hidden py-24 sm:py-32">
+    <section ref={root} id="contact" className="drip-edge dotgrid overflow-hidden border-t-2 border-ink bg-band pb-[calc(6rem+var(--drip-h))] pt-24 sm:pb-[calc(8rem+var(--drip-h))] sm:pt-32"
+      style={paintDripStyle}>
       <div aria-hidden className="absolute -bottom-[20%] right-[-8%] h-[55vmin] w-[55vmin] rounded-full bg-teal-soft/55 blur-[120px] dark:bg-teal-soft/10" />
       <Sparkle className="absolute left-[8%] top-[18%] hidden animate-spin-slow text-teal lg:block" size={44} />
 
@@ -158,6 +160,9 @@ export default function Contact() {
           )}
         </div>
       </div>
+
+      {/* The page ends in paint: a few drips run down into the footer. */}
+      <PaintDripOutline />
     </section>
   );
 }

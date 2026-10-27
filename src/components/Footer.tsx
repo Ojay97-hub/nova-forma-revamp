@@ -10,8 +10,9 @@ const QUICK_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t-2 border-ink bg-navy text-paper">
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+    <footer className="bg-navy text-paper">
+      {/* No top rule here: Contact's drip edge carries it. */}
+      <div className="mx-auto max-w-6xl px-5 pb-16 pt-[calc(var(--drip-h)+2.5rem)] sm:px-8">
         <div className="grid gap-10 md:grid-cols-[1fr_auto_auto]">
           {/* Brand */}
           <div>

@@ -19,6 +19,7 @@ export default {
         cream: colorVar("--color-cream"),
         ivory: colorVar("--color-ivory"),
         paper: "#F7FCFC",
+        band: colorVar("--color-band"),
         ink: {
           DEFAULT: colorVar("--color-ink"),
           soft: colorVar("--color-ink-soft"),
